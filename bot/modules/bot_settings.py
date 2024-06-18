@@ -215,6 +215,9 @@ async def load_config():
     if len(UPSTREAM_BRANCH) == 0:
         UPSTREAM_BRANCH = 'main'
 
+    BASE_URL_PORT = environ.get("BASE_URL_PORT", "")
+    BASE_URL_PORT = 80 if len(BASE_URL_PORT) == 0 else int(BASE_URL_PORT)
+
     TORRENT_LIMIT = environ.get('TORRENT_LIMIT', '')
     TORRENT_LIMIT = '' if len(TORRENT_LIMIT) == 0 else float(TORRENT_LIMIT)
 
