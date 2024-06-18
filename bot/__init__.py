@@ -244,6 +244,9 @@ SHOW_MEDIAINFO = SHOW_MEDIAINFO.lower() == 'true'
 MEDIA_GROUP = environ.get('MEDIA_GROUP', '')
 MEDIA_GROUP = MEDIA_GROUP.lower() == 'true'
 
+BASE_URL_PORT = environ.get("BASE_URL_PORT", "")
+BASE_URL_PORT = 80 if len(BASE_URL_PORT) == 0 else int(BASE_URL_PORT)
+
 BASE_URL = environ.get('BASE_URL', '').rstrip("/")
 if len(BASE_URL) == 0:
     warning('BASE_URL not provided!')
@@ -309,6 +312,7 @@ TOKEN_TIMEOUT = int(TOKEN_TIMEOUT) if TOKEN_TIMEOUT.isdigit() else ''
 config_dict = {
     'AS_DOCUMENT': AS_DOCUMENT,
     'BASE_URL': BASE_URL,
+    'BASE_URL_PORT': BASE_URL_PORT,
     'BOT_TOKEN': BOT_TOKEN,
     'BOT_MAX_TASKS': BOT_MAX_TASKS,
     'CMD_SUFFIX': CMD_SUFFIX,
@@ -392,8 +396,11 @@ if ospath.exists('shorteners.txt'):
             if len(temp) == 2:
                 shorteners_list.append({'domain': temp[0],'api_key': temp[1]})
 
-PORT = environ.get('PORT')
-Popen(f"gunicorn web.wserver:app --bind 0.0.0.0:{PORT} --worker-class gevent", shell=True)
+if BASE_URL:
+    Popen(
+        f"gunicorn web.wserver:app --bind 0.0.0.0:{BASE_URL_PORT} --worker-class gevent",
+        shell=True,
+    )
 
 srun(["xnox", "-d", "--profile=."])
 if not ospath.exists('.netrc'):
