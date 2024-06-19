@@ -3,7 +3,7 @@ FROM anasty17/mltb:latest
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app
 
-RUN python -m venv myenv
+RUN python3 -m venv myenv
 RUN source myenv/bin/activate
 
 COPY requirements.txt .
