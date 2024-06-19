@@ -1,14 +1,7 @@
-FROM anasty17/mltb:latest
+FROM 5hojib/aeon:dev
 
 WORKDIR /usr/src/app
-RUN chmod 777 /usr/src/app
-
-RUN apt install python3 -venv
-RUN python3 -m venv myenv
-RUN source myenv/bin/activate
-
-COPY requirements.txt .
-RUN python3.10 -m pip install --no-cache-dir -r requirements.txt --break-system-packages
+RUN pip3 install --no-cache-dir aiofiles aiohttp aioshutil anytree apscheduler aria2p asyncio cloudscraper dnspython feedparser flask gevent google-api-python-client google-auth-httplib2 google-auth-oauthlib gunicorn httpx lxml motor natsort pillow psutil pycryptodome pymongo pyrofork==2.2.11 python-dotenv python-magic qbittorrent-api requests telegraph tenacity tgcrypto urllib3 uvloop xattr yt-dlp
 
 COPY . .
 CMD ["bash", "start.sh"]
