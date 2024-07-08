@@ -1,4 +1,4 @@
-FROM mysterysd/wzmlx:latest
+FROM 5hojib/aeon:dev
 
 WORKDIR /usr/src/app
 
